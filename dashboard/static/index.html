@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Media Hub</title>
+
+    <link rel="stylesheet" href="/style.css">
+</head>
+
+<body>
+
+<div class="background"></div>
+
+<main class="container">
+
+    <header class="header">
+
+        <div>
+            <div class="eyebrow">
+                HOME SERVER
+            </div>
+
+            <h1>Media Hub</h1>
+
+            <p>
+                Your self-hosted services, all in one place.
+            </p>
+        </div>
+
+        <div class="system-status">
+            <span class="status-dot"></span>
+
+            <div>
+                <strong id="statusText">
+                    Checking...
+                </strong>
+
+                <small id="serviceCount">
+                    Discovering services
+                </small>
+            </div>
+        </div>
+
+    </header>
+
+
+    <section>
+
+        <div class="section-header">
+
+            <div>
+                <h2>Services</h2>
+
+                <span id="lastUpdated">
+                    Loading...
+                </span>
+            </div>
+
+            <button id="refreshButton">
+                ↻ Refresh
+            </button>
+
+        </div>
+
+
+        <div id="services" class="services">
+
+            <div class="loading">
+                <div class="spinner"></div>
+                <span>Discovering services...</span>
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <footer>
+        <span>Media Stack</span>
+        <span>•</span>
+        <span>Powered by Caddy</span>
+    </footer>
+
+</main>
+
+<script src="/app.js"></script>
+
+</body>
+</html>

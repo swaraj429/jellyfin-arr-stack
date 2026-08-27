@@ -1,0 +1,117 @@
+# ============================================================
+# Media Stack .gitignore
+# Keep:  docker-compose.yml, config templates, dashboard code
+# Ignore: secrets, media files, databases, runtime state
+# ============================================================
+
+# ------------------------------------------------------------
+# Secrets — never commit real credentials
+# ------------------------------------------------------------
+.env
+
+# ------------------------------------------------------------
+# Live service configs — contain auto-generated API keys/secrets
+# Commit only the *.template versions
+# ------------------------------------------------------------
+config/prowlarr/config.xml
+config/radarr/config.xml
+config/sonarr/config.xml
+config/seerr/settings.json
+config/seerr/settings.old.json
+config/qbittorrent/qBittorrent/qBittorrent.conf
+config/qbittorrent/qBittorrent/qBittorrent-data.conf
+config/qbittorrent/qBittorrent/categories.json
+config/qbittorrent/qBittorrent/watched_folders.json
+
+# ------------------------------------------------------------
+# Media data — potentially terabytes, never commit
+# ------------------------------------------------------------
+data/library/
+data/downloads/
+
+# ------------------------------------------------------------
+# Databases — runtime state, not source of truth
+# ------------------------------------------------------------
+config/prowlarr/*.db
+config/prowlarr/*.db-shm
+config/prowlarr/*.db-wal
+config/radarr/*.db
+config/radarr/*.db-shm
+config/radarr/*.db-wal
+config/sonarr/*.db
+config/sonarr/*.db-shm
+config/sonarr/*.db-wal
+config/seerr/db/
+
+# ------------------------------------------------------------
+# Logs — runtime noise
+# ------------------------------------------------------------
+config/prowlarr/logs/
+config/radarr/logs/
+config/sonarr/logs/
+config/qbittorrent/qBittorrent/logs/
+config/seerr/logs/
+
+# ------------------------------------------------------------
+# Caddy runtime state (certs, ACME data, etc.)
+# ------------------------------------------------------------
+config/caddy/data/
+config/caddy/config/
+
+# ------------------------------------------------------------
+# Jellyfin runtime state (cache, transcodes, generated metadata)
+# ------------------------------------------------------------
+config/jellyfin/cache/
+config/jellyfin/transcodes/
+config/jellyfin/config/
+
+# ------------------------------------------------------------
+# qBittorrent runtime / session state
+# ------------------------------------------------------------
+config/qbittorrent/.cache/
+config/qbittorrent/qBittorrent/BT_backup/
+config/qbittorrent/qBittorrent/GeoDB/
+config/qbittorrent/qBittorrent/rss/
+config/qbittorrent/qBittorrent/ipc-socket
+config/qbittorrent/qBittorrent/lockfile
+config/qbittorrent/qBittorrent/web_clientdata.json
+
+# ------------------------------------------------------------
+# Prowlarr / Radarr / Sonarr runtime state
+# ------------------------------------------------------------
+config/prowlarr/Definitions/
+config/prowlarr/Sentry/
+config/prowlarr/asp/
+config/prowlarr/*.pid
+config/radarr/MediaCover/
+config/radarr/Sentry/
+config/radarr/asp/
+config/radarr/*.pid
+config/sonarr/MediaCover/
+config/sonarr/Sentry/
+config/sonarr/asp/
+config/sonarr/*.pid
+
+# ------------------------------------------------------------
+# Seerr runtime / cache state
+# ------------------------------------------------------------
+config/seerr/cache/
+config/seerr/anime-list.xml
+config/seerr/testfile
+config/seerr/settings.old.json
+
+# ------------------------------------------------------------
+# Tailscale state (auth keys are machine-specific secrets)
+# ------------------------------------------------------------
+config/tailscale/
+
+# ------------------------------------------------------------
+# OS / Editor noise
+# ------------------------------------------------------------
+.DS_Store
+Thumbs.db
+*.swp
+*.swo
+*~
+.idea/
+.vscode/

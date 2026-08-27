@@ -1,0 +1,51 @@
+{
+    admin 0.0.0.0:2019
+}
+
+:80 {
+    route {
+        # Sonarr
+        @sonarr_root path /sonarr
+        redir @sonarr_root /sonarr/ 308
+
+        @sonarr path /sonarr/*
+        reverse_proxy @sonarr sonarr:8989
+
+
+        # Radarr
+        @radarr_root path /radarr
+        redir @radarr_root /radarr/ 308
+
+        @radarr path /radarr/*
+        reverse_proxy @radarr radarr:7878
+
+
+        # Prowlarr
+        @prowlarr_root path /prowlarr
+        redir @prowlarr_root /prowlarr/ 308
+
+        @prowlarr path /prowlarr/*
+        reverse_proxy @prowlarr prowlarr:9696
+
+
+        # qBittorrent
+        @qbit_root path /qbit
+        redir @qbit_root /qbit/ 308
+
+        handle_path /qbit/* {
+	     reverse_proxy qbittorrent:8080
+	}
+
+
+        # Seerr
+        @seerr_root path /seerr
+        redir @seerr_root /seerr/ 308
+
+        @seerr path /seerr/*
+        reverse_proxy @seerr seerr:5055
+
+
+        # Fallback
+        reverse_proxy dashboard:80
+    }
+}

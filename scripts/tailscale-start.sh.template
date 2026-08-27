@@ -1,0 +1,45 @@
+#!/bin/sh
+set -e
+
+echo "Starting Tailscale containerboot..."
+
+# Start the normal Tailscale container boot process
+/usr/local/bin/containerboot &
+
+# Wait until Tailscale creates its interface
+echo "Waiting for tailscale0..."
+until ip link show tailscale0 >/dev/null 2>&1; do
+    sleep 1
+done
+
+echo "tailscale0 is ready"
+
+# Wait for Docker DNS to resolve Caddy
+until CADDY_IP="$(getent hosts caddy | awk '{print $1}' | head -n1)" && [ -n "$CADDY_IP" ]; do
+    sleep 1
+done
+
+echo "Caddy resolved to: $CADDY_IP"
+
+# Forward Tailscale HTTP traffic to Caddy.
+# This is kept only for the Caddy/Tailscale HTTP path.
+iptables -t nat -C PREROUTING \
+    -i tailscale0 \
+    -p tcp \
+    --dport 80 \
+    -j DNAT \
+    --to-destination "$CADDY_IP:80" 2>/dev/null || \
+iptables -t nat -A PREROUTING \
+    -i tailscale0 \
+    -p tcp \
+    --dport 80 \
+    -j DNAT \
+    --to-destination "$CADDY_IP:80"
+
+echo "Tailscale routing rules configured"
+
+# Keep this script alive.
+# containerboot/tailscaled runs in the background.
+while true; do
+    sleep 3600
+done
